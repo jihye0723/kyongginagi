@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/professor">
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/btn_pro"
+            android:layout_width="63dp"
+            android:layout_height="75dp"
+            android:layout_gravity="bottom|center"
+            android:background="#00ff0000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/b_pro"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="@string/pro04"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/title_info"/>
+
+        //강의동 리스트 레이아웃
+
+        <GridLayout
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/layout_background"
+            android:columnCount="2"
+            android:orientation="horizontal"
+            android:layout_marginBottom="120dp"
+            android:scrollbars="vertical"
+
+            >
+
+            <Button
+                android:id="@+id/pro04_1"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:onClick="onClick"
+                android:text="@string/pro04_1"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pro04_2"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:onClick="onClick"
+                android:text="@string/pro04_2"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pro04_3"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:onClick="onClick"
+                android:text="@string/pro04_3"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pro04_4"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#00ff0000"
+                android:onClick="onClick"
+                android:text="@string/pro04_4"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pro04_5"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#00ff0000"
+                android:onClick="onClick"
+                android:text="@string/pro04_5"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pro04_6"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#00ff0000"
+                android:onClick="onClick"
+                android:text="@string/pro04_6"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pro04_7"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#00ff0000"
+                android:onClick="onClick"
+                android:text="@string/pro04_7"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pro04_8"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#00ff0000"
+                android:onClick="onClick"
+                android:text="@string/pro04_8"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pro04_9"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#00ff0000"
+                android:onClick="onClick"
+                android:text="@string/pro04_9"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pro04_10"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#00ff0000"
+                android:onClick="onClick"
+                android:text="@string/pro04_10"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pro04_11"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#00ff0000"
+                android:onClick="onClick"
+                android:text="@string/pro04_11"
+                android:textSize="20sp" />
+
+        </GridLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

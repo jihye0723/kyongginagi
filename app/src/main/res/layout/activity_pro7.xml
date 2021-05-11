@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/professor">
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/btn_pro"
+            android:layout_width="63dp"
+            android:layout_height="75dp"
+            android:layout_gravity="bottom|center"
+            android:background="#00ff0000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/b_pro"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"/>
+
+        //강의동 리스트 레이아웃
+
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="404dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="120dp"
+            android:background="@drawable/layout_background"
+            android:columnCount="1"
+            android:orientation="horizontal"
+            android:scrollbars="vertical">
+
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+
+                    <Button
+                        android:id="@+id/pro07_1"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:onClick="onClick"
+                        android:text="@string/pro07_01"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/pro07_2"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:onClick="onClick"
+                        android:text="@string/pro07_02"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/pro07_3"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:onClick="onClick"
+                        android:text="@string/pro07_03"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/pro07_4"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:onClick="onClick"
+                        android:text="@string/pro07_04"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/pro07_5"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:onClick="onClick"
+                        android:text="@string/pro07_05"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/pro07_6"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:onClick="onClick"
+                        android:text="@string/pro07_06"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/pro07_7"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:onClick="onClick"
+                        android:text="@string/pro07_07"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/pro07_8"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:onClick="onClick"
+                        android:text="@string/pro07_08"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/pro07_9"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:onClick="onClick"
+                        android:text="@string/pro07_09"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/pro07_10"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:onClick="onClick"
+                        android:text="@string/pro07_10"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </ScrollView>
+        </GridLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
