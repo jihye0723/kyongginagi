@@ -63,10 +63,10 @@ public class RoomInfoPop extends Fragment implements onBackPressedListener {
         x.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                /*FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 FragmentRoom_1 fragmentRoom1= new FragmentRoom_1();
                 transaction.replace(R.id.tmap,fragmentRoom1);
-                transaction.commit();
+                transaction.commit();*/
             }
         });
 

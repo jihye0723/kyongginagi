@@ -1,51 +1,24 @@
 package org.techtown.tmaptest;
 
 public class ProInfoItem {
-    String floor;
-    int floorPic1, floorPic2,floorPic3, floorPic4, floorPic5;
+    String proName, proCall, proMail;
 
-    public ProInfoItem(String floor, int floorPic1, int floorPic2, int floorPic3, int floorPic4, int floorPic5) {
-        this.floor = floor;
-        this.floorPic1 = floorPic1;
-        this.floorPic2 = floorPic2;
-        this.floorPic3 = floorPic3;
-        this.floorPic4 = floorPic4;
-        this.floorPic5 = floorPic5;
+    public ProInfoItem(String proName, String proCall, String proMail) {
+        this.proName = proName;
+        this.proCall = proCall;
+        this.proMail = proMail;
     }
 
-    public ProInfoItem() {
+    // 교수님 정보 세팅.
+    public String getProName() {
+        return proName;
+    }
+    public void setProName(String proName) {
+        this.proName = proName;
+    }
+    public String getProCall() { return proCall;}
+    public void setProCall(String proCall) { this.proCall = proCall; }
+    public String getProMail() { return proMail; }
+    public void setProMail(String proMail) { this.proMail = proMail; }
 
-    }
-
-
-    // 층 수 세팅.
-    public String getFloor() {
-        return floor;
-    }
-    public void setFloor(String floor) {
-        this.floor = floor;
-    }
-
-    // 층 수 별로 미리보기 아이콘 세팅.
-    public int getFloorPic1() {
-        return floorPic1;
-    }
-    public int getFloorPic2() {
-        return floorPic2;
-    }
-    public int getFloorPic3() {
-        return floorPic3;
-    }
-    public int getFloorPic4() {
-        return floorPic4;
-    }
-    public int getFloorPic5() {
-        return  floorPic5;
-    }
-
-    @Override
-    public String toString() {
-        return "RoomInfoItem{" +
-                "floor='" + floor + "\"" + "}";
-    }
 }

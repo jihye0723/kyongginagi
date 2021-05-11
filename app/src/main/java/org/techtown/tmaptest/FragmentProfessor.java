@@ -38,7 +38,7 @@ public class FragmentProfessor extends Fragment implements onBackPressedListener
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProfessorInfo_1 pro01= new ProfessorInfo_1();
+                ProInfo1 pro01= new ProInfo1();
                 transaction.replace(R.id.tmap,pro01);
                 transaction.commit();
             }
@@ -48,7 +48,7 @@ public class FragmentProfessor extends Fragment implements onBackPressedListener
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProfessorInfo_1 pro02= new ProfessorInfo_1();
+                ProInfo1 pro02= new ProInfo1();
                 transaction.replace(R.id.tmap,pro02);
                 transaction.commit();
             }
@@ -58,7 +58,7 @@ public class FragmentProfessor extends Fragment implements onBackPressedListener
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProfessorInfo_1 pro03= new ProfessorInfo_1();
+                ProInfo1 pro03= new ProInfo1();
                 transaction.replace(R.id.tmap,pro03);
                 transaction.commit();
             }
@@ -68,7 +68,7 @@ public class FragmentProfessor extends Fragment implements onBackPressedListener
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProfessorInfo_1 pro04= new ProfessorInfo_1();
+                ProInfo1 pro04= new ProInfo1();
                 transaction.replace(R.id.tmap,pro04);
                 transaction.commit();
             }
@@ -78,7 +78,7 @@ public class FragmentProfessor extends Fragment implements onBackPressedListener
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProfessorInfo_1 pro05= new ProfessorInfo_1();
+                ProInfo1 pro05= new ProInfo1();
                 transaction.replace(R.id.tmap,pro05);
                 transaction.commit();
             }
@@ -88,7 +88,7 @@ public class FragmentProfessor extends Fragment implements onBackPressedListener
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProfessorInfo_1 pro06= new ProfessorInfo_1();
+                ProInfo1 pro06= new ProInfo1();
                 transaction.replace(R.id.tmap,pro06);
                 transaction.commit();
             }
@@ -98,7 +98,7 @@ public class FragmentProfessor extends Fragment implements onBackPressedListener
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProfessorInfo_1 pro07= new ProfessorInfo_1();
+                ProInfo1 pro07= new ProInfo1();
                 transaction.replace(R.id.tmap,pro07);
                 transaction.commit();
             }
@@ -108,7 +108,7 @@ public class FragmentProfessor extends Fragment implements onBackPressedListener
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProfessorInfo_1 pro08= new ProfessorInfo_1();
+                ProInfo1 pro08= new ProInfo1();
                 transaction.replace(R.id.tmap,pro08);
                 transaction.commit();
             }

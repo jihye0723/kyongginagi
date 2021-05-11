@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/transparent"
     >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/professor">
+    </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="vertical"
-        android:background="@drawable/contents_info">
+        android:gravity="center">
 
         <ImageButton
             android:id="@+id/btn_pro"
@@ -23,59 +27,74 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="5dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SAMPLE"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:background="@drawable/title_info"/>
+        //강의동 리스트 레이아웃
 
-        //교수님 정보 리스트 레이아웃
-        <TextView
-            android:id="@+id/proInfo_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="@color/white"
-            android:textSize="12sp"
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/layout_background"
+            android:columnCount="1"
+            android:orientation="horizontal"
+            android:layout_marginBottom="120dp"
             android:scrollbars="vertical"
-            android:text=""/>
+            >
+
+            <Button
+                android:id="@+id/pro01_1"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:onClick="onClick"
+                android:text="@string/pro01_1"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pro01_2"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:onClick="onClick"
+                android:text="@string/pro01_2"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pro01_3"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:onClick="onClick"
+                android:text="@string/pro01_3"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pro01_4"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#00ff0000"
+                android:onClick="onClick"
+                android:text="@string/pro01_4"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pro01_5"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#00ff0000"
+                android:onClick="onClick"
+                android:text="@string/pro01_5"
+                android:textSize="20sp" />
+
+
+        </GridLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1">
 
-        // 취소 버튼.
-        <TextView
-            android:id="@+id/cancelBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="취소"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_weight="0.5"
-            android:background="@drawable/cancelbtn_info"/>
-
-        // 길 안내 버튼.
-        <TextView
-            android:id="@+id/naviBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="길 안내"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_weight="0.5"
-            android:background="@drawable/navibtn_info"/>
-    </LinearLayout>
-
-</LinearLayout>
-
+</RelativeLayout>

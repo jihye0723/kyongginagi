@@ -20,6 +20,65 @@
     <string name="pro07">창의공과대학</string>
     <string name="pro08">관광문화대학</string>
 
+    <string name="pro01_1">교직학부</string>
+    <string name="pro01_2">교양학부</string>
+    <string name="pro01_3">진성애교양교육연구센터</string>
+    <string name="pro01_4">의사소통센터</string>
+    <string name="pro01_5">감성SW교육센터</string>
+
+    <string name="pro02_1">국어국문학과</string>
+    <string name="pro02_2">영어영문학과</string>
+    <string name="pro02_3">사학과</string>
+    <string name="pro02_4">문헌정보학과</string>
+    <string name="pro02_5">문예창작학과</string>
+    <string name="pro02_6">유아교육과</string>
+    <string name="pro02_7">글로벌어문학부</string>
+
+    <string name="pro03_01">입체조형학과</string>
+    <string name="pro03_02">체육학과</string>
+    <string name="pro03_03">시큐리티매니지먼트</string>
+    <string name="pro03_04">시각정보디자인</string>
+    <string name="pro03_05">산업디자인</string>
+    <string name="pro03_06">장신구금속디자인</string>
+    <string name="pro03_07">Fine Arts</string>
+    <string name="pro03_08">스포츠과학</string>
+
+    <string name="pro04_1">법학</string>
+    <string name="pro04_2">사회복지</string>
+    <string name="pro04_3">범죄교정</string>
+    <string name="pro04_4">청소년</string>
+    <string name="pro04_5">경찰행정</string>
+    <string name="pro04_6">행정학</string>
+    <string name="pro04_7">국제학</string>
+    <string name="pro04_8">경제학</string>
+    <string name="pro04_9">무역학</string>
+    <string name="pro04_10">응용통계</string>
+    <string name="pro04_11">지식재산</string>
+
+    <string name="pro05_1">AI컴퓨터공학부</string>
+    <string name="pro05_2">산업경영공학</string>
+    <string name="pro05_3">경영정보</string>
+    <string name="pro05_4">경영학</string>
+    <string name="pro05_5">회계세무</string>
+    <string name="pro05_6">국제산업정보</string>
+
+    <string name="pro06_1">AI컴퓨터공학부</string>
+    <string name="pro06_2">산업경영공학</string>
+    <string name="pro06_3">경영정보</string>
+    <string name="pro06_4">경영학</string>
+    <string name="pro06_5">회계세무</string>
+
+    <string name="pro07_01">건축학과</string>
+    <string name="pro07_02">전자공학과</string>
+    <string name="pro07_03">신소재공학</string>
+    <string name="pro07_04">환경에너지공학</string>
+    <string name="pro07_05">화학공학</string>
+    <string name="pro07_06">토목공학</string>
+    <string name="pro07_07">건축공학</string>
+    <string name="pro07_08">도시-교통공학</string>
+    <string name="pro07_09">기계시스템공학</string>
+    <string name="pro07_10">건축안전공학</string>
+
     <string name="bus1">기숙사정류장</string>
     <string name="bus2">매표소정류장</string>
     <string name="bus3">경기탑정류장</string>

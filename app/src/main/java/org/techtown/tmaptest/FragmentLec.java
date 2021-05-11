@@ -35,10 +35,7 @@ public class FragmentLec extends Fragment implements org.techtown.tmaptest.onBac
         button01.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                FragmentRoom_1 room1= new FragmentRoom_1();
-                transaction.replace(R.id.tmap,room1);
-                transaction.commit();
+
             }
         });
 
@@ -46,10 +43,7 @@ public class FragmentLec extends Fragment implements org.techtown.tmaptest.onBac
         button02.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                FragmentRoom_2 room2= new FragmentRoom_2();
-                transaction.replace(R.id.tmap,room2);
-                transaction.commit();
+
             }
         });
 
@@ -57,10 +51,7 @@ public class FragmentLec extends Fragment implements org.techtown.tmaptest.onBac
         button03.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                FragmentRoom_3 room3= new FragmentRoom_3();
-                transaction.replace(R.id.tmap,room3);
-                transaction.commit();
+
             }
         });
 
@@ -68,10 +59,7 @@ public class FragmentLec extends Fragment implements org.techtown.tmaptest.onBac
         button04.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                FragmentRoom_4 room4= new FragmentRoom_4();
-                transaction.replace(R.id.tmap,room4);
-                transaction.commit();
+
             }
         });
 
@@ -79,10 +67,7 @@ public class FragmentLec extends Fragment implements org.techtown.tmaptest.onBac
         button05.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                FragmentRoom_5 room5= new FragmentRoom_5();
-                transaction.replace(R.id.tmap,room5);
-                transaction.commit();
+
             }
         });
 
@@ -90,10 +75,7 @@ public class FragmentLec extends Fragment implements org.techtown.tmaptest.onBac
         button06.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                FragmentRoom_6 room6= new FragmentRoom_6();
-                transaction.replace(R.id.tmap,room6);
-                transaction.commit();
+
             }
         });
 
@@ -101,10 +83,7 @@ public class FragmentLec extends Fragment implements org.techtown.tmaptest.onBac
         button07.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                FragmentRoom_7 room7= new FragmentRoom_7();
-                transaction.replace(R.id.tmap,room7);
-                transaction.commit();
+
             }
         });
 
@@ -112,10 +91,7 @@ public class FragmentLec extends Fragment implements org.techtown.tmaptest.onBac
         button08.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                FragmentRoom_8 room8= new FragmentRoom_8();
-                transaction.replace(R.id.tmap,room8);
-                transaction.commit();
+
             }
         });
 
@@ -123,10 +99,7 @@ public class FragmentLec extends Fragment implements org.techtown.tmaptest.onBac
         button09.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                FragmentRoom_9 room9= new FragmentRoom_9();
-                transaction.replace(R.id.tmap,room9);
-                transaction.commit();
+
             }
         });
 
@@ -134,10 +107,7 @@ public class FragmentLec extends Fragment implements org.techtown.tmaptest.onBac
         button10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                FragmentRoom_10 room10= new FragmentRoom_10();
-                transaction.replace(R.id.tmap,room10);
-                transaction.commit();
+
             }
         });
 

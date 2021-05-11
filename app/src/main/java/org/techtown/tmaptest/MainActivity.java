@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -62,6 +64,21 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        //DB test
+        //DB 생성
+        DBHelper helper;
+        SQLiteDatabase db;
+        helper = new DBHelper(MainActivity.this, "sampledb.db", null, 1);
+        db = helper.getWritableDatabase();
+        helper.onCreate(db);
+
+        //db 값 입력
+        ContentValues values = new ContentValues();
+        values.put("txt","test");
+        db.insert("mytable",null,values);
+
 
         //길안내 버튼 테스트
         BusProvider.getInstance().register(this);   // Bus
@@ -207,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
 
             }
         });
+
 
     }
 
