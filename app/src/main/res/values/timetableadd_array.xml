@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="time">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+
+    <string-array name="day">
+        <item>월</item>
+        <item>화</item>
+        <item>수</item>
+        <item>목</item>
+        <item>금</item>
+    </string-array>
+
+    <string-array name="lecRoom">
+        <item>1_진리관</item>
+        <item>2_성신관</item>
+        <item>3_애경관</item>
+        <item>4_예지관</item>
+        <item>5_덕문관</item>
+        <item>6_광교관</item>
+        <item>7_집현관</item>
+        <item>8_육영관</item>
+        <item>9_호연관</item>
+        <item>종합강의동</item>
+    </string-array>
+
+</resources>
