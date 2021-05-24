@@ -21,7 +21,7 @@ public class FragmentProfessor extends Fragment implements onBackPressedListener
 
     //교수님 정보 버튼 (대학명 출력)
     private View view;
-    private Button pro01,pro02,pro03,pro04,pro05,pro06,pro07,pro08;
+    private Button pro01,pro02,pro03,pro04,pro05,pro06,pro07;
 
     public FragmentProfessor(){
 
@@ -48,7 +48,7 @@ public class FragmentProfessor extends Fragment implements onBackPressedListener
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProInfo1 pro02= new ProInfo1();
+                ProInfo2 pro02= new ProInfo2();
                 transaction.replace(R.id.tmap,pro02);
                 transaction.commit();
             }
@@ -58,7 +58,7 @@ public class FragmentProfessor extends Fragment implements onBackPressedListener
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProInfo1 pro03= new ProInfo1();
+                ProInfo3 pro03= new ProInfo3();
                 transaction.replace(R.id.tmap,pro03);
                 transaction.commit();
             }
@@ -68,7 +68,7 @@ public class FragmentProfessor extends Fragment implements onBackPressedListener
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProInfo1 pro04= new ProInfo1();
+                ProInfo4 pro04= new ProInfo4();
                 transaction.replace(R.id.tmap,pro04);
                 transaction.commit();
             }
@@ -78,7 +78,7 @@ public class FragmentProfessor extends Fragment implements onBackPressedListener
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProInfo1 pro05= new ProInfo1();
+                ProInfo5 pro05= new ProInfo5();
                 transaction.replace(R.id.tmap,pro05);
                 transaction.commit();
             }
@@ -88,7 +88,7 @@ public class FragmentProfessor extends Fragment implements onBackPressedListener
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProInfo1 pro06= new ProInfo1();
+                ProInfo6 pro06= new ProInfo6();
                 transaction.replace(R.id.tmap,pro06);
                 transaction.commit();
             }
@@ -98,18 +98,8 @@ public class FragmentProfessor extends Fragment implements onBackPressedListener
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProInfo1 pro07= new ProInfo1();
+                ProInfo7 pro07= new ProInfo7();
                 transaction.replace(R.id.tmap,pro07);
-                transaction.commit();
-            }
-        });
-        pro08 = view.findViewById(R.id.pro08);
-        pro08.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProInfo1 pro08= new ProInfo1();
-                transaction.replace(R.id.tmap,pro08);
                 transaction.commit();
             }
         });

@@ -1,118 +1,289 @@
 package org.techtown.tmaptest;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.AssetManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import static android.app.Activity.RESULT_OK;
 
 public class FragmentLec extends Fragment implements org.techtown.tmaptest.onBackPressedListener {
     public FragmentLec(){
     }
     private View view;
-   // private ImageButton btn_lec;
-    private Button button01,button02,button03,button04,button05,button06,button07,button08,button09,button10;
+    public static final String ROOT_DIR = "/data/data/org.techtown.tmaptest/databases/";
 
 
+    private List<String> list;          // 데이터를 넣은 리스트변수
+    private ListView listView;          // 검색을 보여줄 리스트변수
+    private EditText editSearch;        // 검색어를 입력할 Input 창
+    private SearchAdapter adapter;      // 리스트뷰에 연결할 아답터
+    private ArrayList<String> arraylist;
 
-    @Nullable
+
+    String TblName = "Location";
+    String list_sql = null;
+
+
+    ConstraintLayout mainbuttonLayout;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_lecturerooom,container,false);
-        //btn_lec = view.findViewById(R.id.btn_lec);
 
-        //강의동 이름 클릭
-        button01 = view.findViewById(R.id.button01);
-        button01.setOnClickListener(new View.OnClickListener() {
+        Button btnyes = view.findViewById(R.id.btnyes);
+        btnyes.setVisibility(View.INVISIBLE);
+
+        Button btnAll = view.findViewById(R.id.btnAll);
+        Button btnLec = view.findViewById(R.id.btnLec);
+        Button btnEtc = view.findViewById(R.id.btnEtc);
+
+        btnAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                list.clear();
+                list_sql = "Select * FROM " + TblName;
+                ShowMushDBInfo(list_sql);
+                adapter.notifyDataSetChanged();
+            }
+        });
+        btnLec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list.clear();
+                list_sql = "Select * FROM " + TblName + " WHERE _id <= 10;";
+                ShowMushDBInfo(list_sql);
+                adapter.notifyDataSetChanged();
+            }
+        });
+        btnEtc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list.clear();
+                list_sql = "Select * FROM " + TblName + " WHERE _id > 10;";
+                ShowMushDBInfo(list_sql);
+                adapter.notifyDataSetChanged();
             }
         });
 
-        button02 = view.findViewById(R.id.button02);
-        button02.setOnClickListener(new View.OnClickListener() {
+        editSearch = (EditText) view.findViewById(R.id.editSearch);
+        listView = (ListView) view.findViewById(R.id.listView);
+
+        // 리스트를 생성한다.
+        list = new ArrayList<String>();
+
+        // 검색에 사용할 데이터을 미리 저장한다.
+
+        list_sql = "Select * FROM " + TblName;
+        ShowMushDBInfo(list_sql);
+
+        // 리스트의 모든 데이터를 arraylist에 복사한다.// list 복사본을 만든다.
+        arraylist = new ArrayList<String>();
+        arraylist.addAll(list);
+
+        // 리스트에 연동될 아답터를 생성한다.
+        adapter = new SearchAdapter(list, getActivity().getApplicationContext());
+
+        // 리스트뷰에 아답터를 연결한다.
+        listView.setAdapter(adapter);
+
+        // input창에 검색어를 입력시 "addTextChangedListener" 이벤트 리스너를 정의한다.
+        editSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-        });
 
-        button03 = view.findViewById(R.id.button03);
-        button03.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void afterTextChanged(Editable editable) {
+                // input창에 문자를 입력할때마다 호출된다.
+                // search 메소드를 호출한다.
+                String text = editSearch.getText().toString();
 
-            }
-        });
-
-        button04 = view.findViewById(R.id.button04);
-        button04.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        button05 = view.findViewById(R.id.button05);
-        button05.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        button06 = view.findViewById(R.id.button06);
-        button06.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        button07 = view.findViewById(R.id.button07);
-        button07.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        button08 = view.findViewById(R.id.button08);
-        button08.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        button09 = view.findViewById(R.id.button09);
-        button09.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        button10 = view.findViewById(R.id.button10);
-        button10.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+                search(text);
             }
         });
 
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // position이 클릭된 위치입니다.
+                // 컬렉션에서 적절하게 꺼내서 사용하시면 됩니다.
+                Toast.makeText(getActivity().getApplicationContext(), list.get(position), Toast.LENGTH_LONG).show();
+
+                String selectLoc;
+                selectLoc = list.get(position);
+
+                double latitude = getLati(selectLoc);
+                double longitude = getLongi(selectLoc);
+
+
+                Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                intent.putExtra("SearchMain_Lati", latitude);
+                intent.putExtra("SearchMain_Longi", longitude);
+
+
+                btnyes.setVisibility(View.VISIBLE);
+                btnyes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((MainActivity)getActivity()).onActivityResult(101,RESULT_OK,intent);
+                        getActivity().setResult(RESULT_OK,intent);
+                        goToMain();
+                    }
+                });
+
+
+
+                // 추가된 부분
+                String name = list.get(position);
+
+            }
+        });
         return view;
+    }
+    // 검색을 수행하는 메소드
+    public void search(String charText) {
+
+        // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
+        list.clear();
+
+        // 문자 입력이 없을때는 모든 데이터를 보여준다.
+        if (charText.length() == 0) {
+            list.addAll(arraylist);
+        }
+        // 문자 입력을 할때..
+        else {
+            // 리스트의 모든 데이터를 검색한다.
+            for(int i = 0; i < arraylist.size(); i++) {
+                // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
+                if (arraylist.get(i).toLowerCase().contains(charText)) {
+                    // 검색된 데이터를 리스트에 추가한다.
+                    list.add(arraylist.get(i));
+                }
+            }
+        }
+        // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
+        adapter.notifyDataSetChanged();
+    }
+
+
+    public static void setDB(Context ctx) {
+        File folder = new File(ROOT_DIR);
+        if(folder.exists()) {
+        } else {
+            folder.mkdirs();
+        }
+        AssetManager assetManager = ctx.getResources().getAssets();
+        // db파일 이름 적어주기
+        File outfile = new File(ROOT_DIR+"DBtest.db");
+        InputStream is = null;
+        FileOutputStream fo = null;
+        long filesize = 0;
+        try {
+            is = assetManager.open("DBtest.db", AssetManager.ACCESS_BUFFER);
+            filesize = is.available();
+            if (outfile.length() <= 0) {
+                byte[] tempdata = new byte[(int) filesize];
+                is.read(tempdata);
+                is.close();
+                outfile.createNewFile();
+                fo = new FileOutputStream(outfile);
+                fo.write(tempdata);
+                fo.close();
+            } else {}
+        } catch (IOException e) {
+
+        }
+    }
+
+    // Cursor를 통해 .db파일의 내용을 보여주는 함수
+    public SQLiteDatabase db;
+    public Cursor cursor;
+    DBHelper mHelper;
+    //String TblName = "Location";
+
+    //private void ShowMushDBInfo(String name){
+
+
+
+    private double getLati(String selectLoc) {
+        double dbLati = 0;
+        String sql = "SELECT latitude FROM "+TblName+" WHERE " +" locName= "+"'"+selectLoc+"';";
+        cursor = db.rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            dbLati = cursor.getDouble(0);
+        }
+        cursor.close();
+        return dbLati;
+    }
+
+
+    private double getLongi(String selectLoc) {
+        double dbLongi = 0;
+        String sql = "SELECT longitude FROM "+TblName+" WHERE " +" locName= "+"'"+selectLoc+"';";
+        cursor = db.rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            dbLongi = cursor.getDouble(0);
+        }
+        cursor.close();
+        return dbLongi;
+    }
+
+
+
+    private void ShowMushDBInfo(String list_sql){
+        setDB(getActivity().getApplicationContext());
+
+        mHelper =  new DBHelper(getActivity(), "DBtest.db", null, 1);
+        db = mHelper.getWritableDatabase();
+
+        String dbLocName= null;
+
+        //String sql = "Select * FROM " + TblName;
+
+
+        cursor = db.rawQuery(list_sql, null);
+
+        while (cursor.moveToNext()) {
+            dbLocName = cursor.getString(1);
+            list.add(dbLocName);
+        }
+
+        cursor.close();
     }
     @Override
     public void onBackPressed() {

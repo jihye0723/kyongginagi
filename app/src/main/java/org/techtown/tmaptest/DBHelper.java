@@ -25,4 +25,9 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(sql);
         onCreate(db);
     }
+    @Override
+    public void onConfigure(SQLiteDatabase db) {
+        super.onConfigure(db);
+        db.disableWriteAheadLogging();
+    }
 }

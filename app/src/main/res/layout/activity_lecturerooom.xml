@@ -8,11 +8,13 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/lec">
+        android:id="@+id/lec"
+        >
     </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:orientation="vertical">
 
         <ImageButton
@@ -26,128 +28,70 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"/>
 
-        //강의동 리스트 레이아웃
-
-        <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1.5"
-            android:background="@drawable/layout_background"
-            android:columnCount="2"
-            android:orientation="horizontal"
-            android:rowCount="5">
-
-            <Button
-                android:id="@+id/button01"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:onClick="onClick"
-                android:text="@string/title01"
-                android:textSize="20sp" />
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button02"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:onClick="onClick"
-                android:text="@string/title02"
-                android:textSize="20sp" />
+                <Button
+                    android:id="@+id/btnAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="전체" />
 
-            <Button
-                android:id="@+id/button03"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:onClick="onClick"
-                android:text="@string/title03"
-                android:textSize="20sp" />
+                <Button
+                    android:id="@+id/btnLec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="강의실" />
 
-            <Button
-                android:id="@+id/button04"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:background="#00ff0000"
-                android:onClick="onClick"
-                android:text="@string/title04"
-                android:textSize="20sp" />
+                <Button
+                    android:id="@+id/btnEtc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="기타" />
 
-            <Button
-                android:id="@+id/button05"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:background="#00ff0000"
-                android:onClick="onClick"
-                android:text="@string/title05"
-                android:textSize="20sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="vertical"
+                >
+                <EditText
+                    android:id="@+id/editSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/white"
+                    android:background="@drawable/title_info"
+                    android:hint="검색어를 입력하세요."
+                    android:inputType="textAutoCorrect"
+                    />
 
-            <Button
-                android:id="@+id/button06"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:background="#00ff0000"
-                android:onClick="onClick"
-                android:text="@string/title06"
-                android:textSize="20sp" />
-
-            <Button
-                android:id="@+id/button07"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:background="#00ff0000"
-                android:onClick="onClick"
-                android:text="@string/title07"
-                android:textSize="20sp" />
-
-            <Button
-                android:id="@+id/button08"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:background="#00ff0000"
-                android:onClick="onClick"
-                android:text="@string/title08"
-                android:textSize="20sp" />
-
-            <Button
-                android:id="@+id/button09"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:background="#00ff0000"
-                android:onClick="onClick"
-                android:text="@string/title09"
-                android:textSize="20sp" />
-
-            <Button
-                android:id="@+id/button10"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:background="#00ff0000"
-                android:onClick="onClick"
-                android:text="@string/title10"
-                android:textSize="20sp" />
-
-
-        </GridLayout>
-    </LinearLayout>
-
-
+                <ListView
+                    android:id="@+id/listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@color/white"
+                    android:dividerHeight="1dp"
+                    android:background="@drawable/contents_info"
+                    android:textColor="@color/white"></ListView>
+            </LinearLayout>
+        <Button
+            android:id="@+id/btnyes"
+            android:layout_width="149dp"
+            android:layout_height="50dp"
+            android:text="길찾기"
+            android:textStyle="bold"
+            android:layout_gravity="right"/>
+        </LinearLayout>
 </RelativeLayout>

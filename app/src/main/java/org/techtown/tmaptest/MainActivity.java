@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.skt.Tmap.TMapData;
@@ -30,12 +33,17 @@ import com.skt.Tmap.TMapPolyLine;
 import com.skt.Tmap.TMapView;
 import com.squareup.otto.Subscribe;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements TMapGpsManager.onLocationChangedCallback {
 
-    private ImageButton pro, lec, etc, time;
+    private static final int REQUEST_CODE = 101;
+    private ImageButton pro, navi, time;
 
 
     private long lastTimeBackPressed;
@@ -52,10 +60,14 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
     //길찾기 메뉴로 추가된 코드
     TMapPoint tMapPointStart = null;
     TMapPoint tMapPointEnd = null;
-    double Distance = 0;
+    String Distance = null;
+    String Time = null;
+
+    TMapPoint searchPoint = null;
 
     TMapPOIItem POIItem = new TMapPOIItem();
 
+    ArrayList<String> arrPOI = new ArrayList<>();
     int testNum = 1;
 
 
@@ -66,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
         setContentView(R.layout.activity_main);
 
 
-        //DB test
+     /*   //DB test
         //DB 생성
         DBHelper helper;
         SQLiteDatabase db;
@@ -77,11 +89,11 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
         //db 값 입력
         ContentValues values = new ContentValues();
         values.put("txt","test");
-        db.insert("mytable",null,values);
+        db.insert("mytable",null,values);*/
 
 
         //길안내 버튼 테스트
-        BusProvider.getInstance().register(this);   // Bus
+       // BusProvider.getInstance().register(this);   // Bus
 
 
         // T Map View
@@ -96,14 +108,14 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
 
         //fragment를 이용한 메인 버튼 출력
         pro = (ImageButton) findViewById(R.id.pro);
-        lec = (ImageButton) findViewById(R.id.lec);
-        etc = (ImageButton) findViewById(R.id.etc);
+        navi = (ImageButton) findViewById(R.id.navi);
         time = (ImageButton) findViewById(R.id.time);
 
         //교수님 정보 버튼
         pro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tMapView.removeAllTMapPolyLine(); //다른 버튼 누르면 이전 길찾기 종료
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 FragmentProfessor Fpro = new FragmentProfessor();
                 transaction.replace(R.id.tmap, Fpro);
@@ -112,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
         });
 
         //강의동 리스트
-        lec.setOnClickListener(new View.OnClickListener() {
+        navi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -122,21 +134,11 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
             }
         });
 
-        //정류장, 학교식당 리스트
-        etc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                FragmentEtc Fetc = new FragmentEtc();
-                transaction.replace(R.id.tmap, Fetc);
-                transaction.commit();
-            }
-        });
-
         //시간표
         time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tMapView.removeAllTMapPolyLine(); //다른 버튼 누르면 이전 길찾기 종료
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 FragmentTimetable Ftime = new FragmentTimetable();
                 transaction.replace(R.id.tmap, Ftime);
@@ -225,32 +227,67 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
             }
         });
 
-
     }
+    @Override
+    protected void onActivityResult(int requetCode, int resultCode, Intent data) {
+        super.onActivityResult(101, resultCode, data);
 
+        if(requetCode == REQUEST_CODE) {
+            if(resultCode != Activity.RESULT_OK) {
+                return;
+            }
+            double search_lati = data.getExtras().getDouble("SearchMain_Lati");
+            double search_longi = data.getExtras().getDouble("SearchMain_Longi");
+
+            TMapPoint Now = new TMapPoint(tMapGPS.getLocation().getLatitude(), tMapGPS.getLocation().getLongitude());
+            searchPoint = new TMapPoint(search_lati, search_longi);
+            tMapView.setCenterPoint(search_longi, search_lati, true);
+            drawPolyLine(Now, searchPoint);
+        }
+    }
     @Override
     public void onLocationChange(Location location) {
         tMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
         tMapView.setCenterPoint(location.getLongitude(), location.getLatitude());
     }
 
-    private void drawPolyLine(TMapPoint startPoint, TMapPoint endPoint) {
+    private void drawPolyLine(TMapPoint startPoint, TMapPoint endPoint){
 
-        new Thread() {
+        new Thread(){
             @Override
-            public void run() {
+            public void run(){
                 try {
                     TMapPolyLine tMapPolyLine = new TMapData().findPathDataWithType(TMapData.TMapPathType.PEDESTRIAN_PATH, startPoint, endPoint);
                     tMapPolyLine.setLineColor(Color.BLUE);
                     tMapPolyLine.setLineWidth(2);
                     tMapView.addTMapPolyLine("Line1", tMapPolyLine);
-                    Distance = tMapPolyLine.getDistance();
-                } catch (Exception e) {
+
+                    new TMapData().findPathDataAllType(TMapData.TMapPathType.PEDESTRIAN_PATH, startPoint, endPoint, new TMapData.FindPathDataAllListenerCallback(){
+                        @Override
+                        public void onFindPathDataAll(Document document) {
+                            Element root = document.getDocumentElement();
+                            NodeList nodeListPlacemark = root.getElementsByTagName("Document");
+                            for( int i=0; i< nodeListPlacemark.getLength();i++){
+
+                                NodeList Dis = root.getElementsByTagName("tmap:totalDistance");
+                                Distance = Dis.item(0).getChildNodes().item(0).getNodeValue();
+                                NodeList time = root.getElementsByTagName("tmap:totalTime");
+                                Time = time.item(0).getChildNodes().item(0).getNodeValue();
+                                int min = Integer.parseInt(Time)/60;
+                                int sec = Integer.parseInt(Time)%60;
+                                //TextView text = (TextView)findViewById(R.id.textTest);
+                                //text.setText("거리 : " + Distance + "m 시간 : " + min + "분 " + sec + "초");
+                                Log.d("debug", "거리 : " + Distance + "m\n시간 : " + min + "분 " + sec + "초");
+                            }
+                        }//end onFindPathDataAll
+                    }); //end findPathDataWithType
+
+                }catch(Exception e) {
                     e.printStackTrace();
                 }
-
             }
         }.start();
+
     }
 
     private void setMultiMarkers(ArrayList<TMapPoint> arrTPoint, ArrayList<String> arrTitle,
@@ -325,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
     }
 
 //강의동 좌표
-    private void getPOIPoint(ArrayList<String> arrPOI, int bldNum) {
+        void getPOIPoint(ArrayList<String> arrPOI, int bldNum) {
         final TMapData tMapData = new TMapData();
         final ArrayList<TMapPoint> arrTMapPoint = new ArrayList<>();
         final ArrayList<String> arrTitle = new ArrayList<>();
@@ -343,13 +380,15 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
                         tMapPOIItem.middleAddrName + " " + tMapPOIItem.lowerAddrName);
                 System.out.println(arrAddr);
                 tMapPointEnd = tMapPOIItem.getPOIPoint();
+                tMapView.setCenterPoint(tMapPointEnd.getLongitude(), tMapPointEnd.getLatitude(), true);
                 setMultiMarkers(arrTMapPoint, arrTitle, arrAddr);
                 drawPolyLine(Now, tMapPointEnd);
+
             }
         });
         //}
 
-    }
+        }
     //기타 좌표 수동입력
     void getPoint(ArrayList<TMapPoint> arrPoint, int bldNum){
         final ArrayList<TMapPoint> arrTMapPoint = new ArrayList<>();
@@ -370,20 +409,21 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
                 return;
             }
         }
-
         //두 번 클릭시 어플 종료
         if (System.currentTimeMillis() - lastTimeBackPressed < 1500) {
             finish();
             return;
         }
+
         lastTimeBackPressed = System.currentTimeMillis();
         Toast.makeText(this, "'뒤로' 버튼을 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
+
 
     }
 
     //강의동 설명에서 길찾기 버튼 눌렀을 때 이벤트
     @Subscribe
-    public void LectureRoom(BusEvent busEvent) {
+    public void LectureRoom(int num) {
         ArrayList<String> arrPOI = new ArrayList<>();
         arrPOI.add("경기대학교 수원캠퍼스 진리관");
         arrPOI.add("경기대학교 수원캠퍼스 성신관");
@@ -395,7 +435,7 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
         arrPOI.add("경기대학교 수원캠퍼스 육영관");
         arrPOI.add("경기대학교 수원캠퍼스 종합강의동");
         Log.e("TAG","bus");
-        getPOIPoint(arrPOI, busEvent.bldNum());
+        getPOIPoint(arrPOI, num);
     }
 
 
@@ -403,7 +443,7 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        BusProvider.getInstance().unregister(this);      // Bus
+        //BusProvider.getInstance().unregister(this);      // Bus
     }
 
 
