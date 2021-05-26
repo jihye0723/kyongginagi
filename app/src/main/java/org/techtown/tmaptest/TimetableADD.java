@@ -3,8 +3,15 @@ package org.techtown.tmaptest;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -13,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -26,6 +34,8 @@ public class TimetableADD extends FragmentActivity {
     Spinner startLec_sp, finishLec_sp, lecRoom_sp, lecDay_sp;
     String startTime, finishTime, lecLoc, lecDay;
     TextView cancelBtn, addBtn;
+
+    private View header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,18 +115,62 @@ public class TimetableADD extends FragmentActivity {
                 lecName = lecName_ed.getText().toString();
                 proName  = proName_ed.getText().toString();
                 detail_lecRoom = detail_lecRoom_ed.getText().toString();
-                Intent intent= new Intent();
-                Bundle bundle=new Bundle(7);
-                bundle.putString("lecName",lecName);
-                bundle.putString("proName", proName);
-                bundle.putString("lecDay", lecDay);
-                bundle.putString("startLec", startTime);
-                bundle.putString("finishLec", finishTime);
-                bundle.putString("detail_lecRoom", detail_lecRoom);
-                bundle.putString("lecLoc", lecLoc);
-                intent.putExtras(bundle);
-                setResult(RESULT_OK, intent);
-                finish();
+
+                // DB 열기.
+                DBHelper helper;
+                SQLiteDatabase db;
+                helper = new DBHelper(TimetableADD.this, "capdb.db", null, 1);
+                db = helper.getWritableDatabase();
+                helper.onCreate(db);
+                ContentValues cv = new ContentValues();
+
+                // 중복 확인 값.
+                String sql = "select lec_name from myTime " +
+                        "where lec_day='"+lecDay+"' and (startT='"+startTime+"' or finishT='"+finishTime+"');";
+                Cursor c = db.rawQuery(sql, null);
+                String redup = "";
+                if(c != null) {
+                    while (c.moveToNext())
+                        redup = c.getString(c.getColumnIndex("lec_name"));
+                }
+
+                // ..교시 ~ ..교시 잘못 썼을때 Toast 메세지
+                if(Integer.parseInt(startTime) > Integer.parseInt(finishTime))
+                    Toast.makeText(getApplicationContext(), "강의시간을 올바르게 선택해주세요.", Toast.LENGTH_SHORT).show();
+                else if(lecName.equals(""))
+                    Toast.makeText(getApplicationContext(), "과목명을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                else if(proName.equals(""))
+                    Toast.makeText(getApplicationContext(), "교수명을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                else if(detail_lecRoom.equals(""))
+                    Toast.makeText(getApplicationContext(), "강의동을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                else if(redup.equals("") == false)
+                    Toast.makeText(getApplicationContext(), "시간표가 겹칩니다.", Toast.LENGTH_SHORT).show();
+                else {
+                    // 추가할지 한번 더 물어보기.
+                    AlertDialog.Builder builder = new AlertDialog.Builder(TimetableADD.this,R.style.MyAlertDialogStyle);
+                    builder.setTitle("시간표 추가");
+                    builder.setMessage("입력한 것을 추가하시겠습니까?");
+                    builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            // DB에 값 넣기.
+                            cv.put("startT", startTime);
+                            cv.put("finishT", finishTime);
+                            cv.put("lec_name", lecName);
+                            cv.put("pro_name", proName);
+                            cv.put("lec_loc", detail_lecRoom);
+                            cv.put("lec_day", lecDay);
+                            long result = db.insert("myTime", null, cv);
+                            if(result == -1) {
+                                Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show(); }
+                            else {
+                                Toast.makeText(getApplicationContext(), "시간표를 추가하였습니다.", Toast.LENGTH_SHORT).show();
+                                finish(); }
+                        }});
+                    builder.setNegativeButton("아니오", null);
+                    builder.create().show();
+                }
 
             }
 

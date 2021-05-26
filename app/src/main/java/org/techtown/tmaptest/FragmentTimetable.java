@@ -1,7 +1,10 @@
 package org.techtown.tmaptest;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
@@ -32,7 +35,7 @@ import static android.app.Activity.RESULT_OK;
 public class FragmentTimetable extends Fragment implements onBackPressedListener {
 
     private ImageButton timetablebtn;
-   //요일별 버튼
+    //요일별 버튼
     //private TextView mon1, mon2, mon3, mon4, mon5, mon6, mon7, mon8, mon9;
     //private TextView tue1, tue2, tue3, tue4, tue5, tue6, tue7, tue8, tue9;
     //private TextView wed1, wed2, wed3, wed4, wed5, wed6, wed7, wed8, wed9;
@@ -53,13 +56,102 @@ public class FragmentTimetable extends Fragment implements onBackPressedListener
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_timetable, container, false);
 
+        // DB 열기.
+        DBHelper helper;
+        SQLiteDatabase db;
+        helper = new DBHelper(getContext(), "capdb.db", null, 1);
+        db = helper.getWritableDatabase();
+        helper.onCreate(db);
+
+        // 시간표 정보 DB 데이터 가져오기.
+        String sql = "select * from myTime";
+        Cursor c = db.rawQuery(sql, null);
+        if(c != null) {
+            while (c.moveToNext()) {
+                String startTime = c.getString(c.getColumnIndex("startT"));
+                String finishTime = c.getString(c.getColumnIndex("finishT"));
+                String lecName = c.getString(c.getColumnIndex("lec_name"));
+                String proName = c.getString(c.getColumnIndex("pro_name"));
+                String detail_lecRoom = c.getString(c.getColumnIndex("lec_loc"));
+                String lecDay = c.getString(c.getColumnIndex("lec_day"));
+
+
+                switch(lecDay){
+                    case ("월") : day="mon"; break;
+                    case("화"): day="tue"; break;
+                    case("수"): day="wed"; break;
+                    case("목"): day="thu"; break;
+                    case("금"): day="fri"; break; }
+
+                switch(startTime){
+                    case("1"): start=1; break;
+                    case("2"): start=2; break;
+                    case("3"): start=3; break;
+                    case("4"): start=4; break;
+                    case("5"): start=5; break;
+                    case("6"): start=6; break;
+                    case("7"): start=7; break;
+                    case("8"): start=8; break;
+                    case("9"): start=9; break; }
+
+                // 강의 종료시간 finish
+                switch(finishTime){
+                    case("1"): finish=1; break;
+                    case("2"): finish=2; break;
+                    case("3"): finish=3; break;
+                    case("4"): finish=4; break;
+                    case("5"): finish=5; break;
+                    case("6"): finish=6; break;
+                    case("7"): finish=7; break;
+                    case("8"): finish=8; break;
+                    case("9"): finish=9; break; }
+
+                Random random=new Random();
+                int color=Color.rgb( random.nextInt(255),
+                        random.nextInt(255),random.nextInt(255));
+
+
+                int midtime = start + (finish - start)/ 2 ;
+                //시작시간,종료시간,날짜 받아서 배경색넣기
+                for(int i=start; i<=finish; i++) {
+                    int resID = getResources().getIdentifier("org.techtown.tmaptest:id/" + day + i, null, null);
+                    ((TextView) view.findViewById(resID)).setBackgroundColor(color);
+                }
+                if(finish-start<=1) {
+                    int midID = getResources().getIdentifier("org.techtown.tmaptest:id/" + day + start, null, null);
+                    TextView mid = (TextView) view.findViewById(midID);
+                    mid.setTextSize(10);
+                    mid.setText(lecName);
+
+                    mid.setGravity(Gravity.CENTER);
+                }
+                else {
+                    int upID = getResources().getIdentifier("org.techtown.tmaptest:id/" + day + (midtime-1), null, null);
+                    TextView up = (TextView) view.findViewById(upID);
+                    int midID = getResources().getIdentifier("org.techtown.tmaptest:id/" + day + midtime, null, null);
+                    TextView down = (TextView) view.findViewById(midID);
+                    up.setTextSize(10);
+                    up.setText(lecName+"\n"+proName);
+                    up.setGravity(Gravity.BOTTOM | Gravity.CENTER);
+                    down.setTextSize(10);
+                    down.setText(detail_lecRoom);
+                    down.setPadding(0,0,0,0);
+                    down.setGravity(Gravity.BOTTOM | Gravity.CENTER);
+
+                }
+
+            }
+        }
+
+
         timetablebtn = (ImageButton) view.findViewById(R.id.timetablebtn);
         //시간표 버튼 누르면 창 뜨게
         timetablebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), TimetableADD.class);
-                FragmentTimetable.super.startActivityForResult(intent, REQUEST_TEST);
+                startActivity(intent);
+                //FragmentTimetable.super.startActivityForResult(intent, REQUEST_TEST);
             }
 
         });
@@ -67,10 +159,12 @@ public class FragmentTimetable extends Fragment implements onBackPressedListener
     }
 
     //add에서 입력한값 받아오기
-    @Override
+   /*@Override
     @Nullable
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 Bundle bundle = data.getExtras();
@@ -157,37 +251,9 @@ public class FragmentTimetable extends Fragment implements onBackPressedListener
 
         }
 
-    }
+    }*/
 
 
-
-        //대표로 한가지만 구현
-       /* mon1 = view.findViewById(R.id.mon1);
-        mon1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder
-                        .setMessage("8_육영관") //예시로 하드코딩
-                        .setCancelable(false)
-                        .setPositiveButton("위치보기", new DialogInterface.OnClickListener() { //길찾기 기능 제외로 단어 변경
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //Intent intent = new Intent(getApplicationContext(), MainActivity.class); //예비화면으로 전환
-                                //startActivity(intent);
-                            }
-                        })
-                        .setNeutralButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            }
-        });*/
 
 
     @Override
