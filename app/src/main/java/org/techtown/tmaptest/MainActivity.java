@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
     }
     @Override
     protected void onActivityResult(int requetCode, int resultCode, Intent data) {
-        super.onActivityResult(101, resultCode, data);
+        super.onActivityResult(requetCode, resultCode, data);
 
         if(requetCode == REQUEST_CODE) {
             if(resultCode != Activity.RESULT_OK) {
@@ -243,6 +243,17 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
             searchPoint = new TMapPoint(search_lati, search_longi);
             tMapView.setCenterPoint(search_longi, search_lati, true);
             drawPolyLine(Now, searchPoint);
+        }
+
+        if(requetCode == 1106) {
+            if (resultCode != Activity.RESULT_OK) {
+                return;
+            }
+            tMapView.removeAllTMapPolyLine(); //다른 버튼 누르면 이전 길찾기 종료
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentTimetable Ftime = new FragmentTimetable();
+            transaction.replace(R.id.tmap, Ftime);
+            transaction.commit();
         }
     }
     @Override

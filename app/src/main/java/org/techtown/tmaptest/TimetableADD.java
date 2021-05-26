@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -26,6 +27,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.FragmentManager;
 
+import java.util.Random;
+
 
 public class TimetableADD extends FragmentActivity {
 
@@ -33,6 +36,7 @@ public class TimetableADD extends FragmentActivity {
     String lecName, proName, detail_lecRoom;
     Spinner startLec_sp, finishLec_sp, lecRoom_sp, lecDay_sp;
     String startTime, finishTime, lecLoc, lecDay;
+    int color;
     TextView cancelBtn, addBtn;
 
     private View header;
@@ -126,7 +130,10 @@ public class TimetableADD extends FragmentActivity {
 
                 // 중복 확인 값.
                 String sql = "select lec_name from myTime " +
-                        "where lec_day='"+lecDay+"' and (startT='"+startTime+"' or finishT='"+finishTime+"');";
+                        "where lec_day='"+lecDay+"' and " +
+                        "((startT between '"+Integer.parseInt(startTime)+"' and '"+Integer.parseInt(finishTime)+"') or " +
+                        "(finishT between'"+Integer.parseInt(startTime)+"' and '"+Integer.parseInt(finishTime)+"') or"+
+                        "((startT <= '"+Integer.parseInt(startTime)+"')and(finishT>='"+Integer.parseInt(finishTime)+"')));";
                 Cursor c = db.rawQuery(sql, null);
                 String redup = "";
                 if(c != null) {
@@ -154,18 +161,24 @@ public class TimetableADD extends FragmentActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
+                            Random random=new Random();
+                            color= Color.rgb( random.nextInt(255), random.nextInt(255),random.nextInt(255));
+
                             // DB에 값 넣기.
-                            cv.put("startT", startTime);
-                            cv.put("finishT", finishTime);
+                            cv.put("startT", Integer.parseInt(startTime));
+                            cv.put("finishT", Integer.parseInt(finishTime));
                             cv.put("lec_name", lecName);
                             cv.put("pro_name", proName);
                             cv.put("lec_loc", detail_lecRoom);
                             cv.put("lec_day", lecDay);
+                            cv.put("color", color);
                             long result = db.insert("myTime", null, cv);
                             if(result == -1) {
                                 Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show(); }
                             else {
                                 Toast.makeText(getApplicationContext(), "시간표를 추가하였습니다.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), FragmentTimetable.class);
+                                setResult(RESULT_OK,intent);
                                 finish(); }
                         }});
                     builder.setNegativeButton("아니오", null);
