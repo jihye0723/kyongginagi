@@ -209,12 +209,12 @@ public class FragmentLec extends Fragment implements org.techtown.tmaptest.onBac
         }
         AssetManager assetManager = ctx.getResources().getAssets();
         // db파일 이름 적어주기
-        File outfile = new File(ROOT_DIR+"DBtest.db");
+        File outfile = new File(ROOT_DIR+"capdb.db");
         InputStream is = null;
         FileOutputStream fo = null;
         long filesize = 0;
         try {
-            is = assetManager.open("DBtest.db", AssetManager.ACCESS_BUFFER);
+            is = assetManager.open("capdb.db", AssetManager.ACCESS_BUFFER);
             filesize = is.available();
             if (outfile.length() <= 0) {
                 byte[] tempdata = new byte[(int) filesize];
@@ -268,7 +268,7 @@ public class FragmentLec extends Fragment implements org.techtown.tmaptest.onBac
     private void ShowMushDBInfo(String list_sql){
         setDB(getActivity().getApplicationContext());
 
-        mHelper =  new DBHelper(getActivity(), "DBtest.db", null, 1);
+        mHelper =  new DBHelper(getActivity(), "capdb.db", null, 1);
         db = mHelper.getWritableDatabase();
 
         String dbLocName= null;

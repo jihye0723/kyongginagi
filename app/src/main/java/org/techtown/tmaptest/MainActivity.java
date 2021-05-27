@@ -7,7 +7,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -37,6 +39,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +56,6 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
 
     private long lastTimeBackPressed;
     String API_Key = "l7xx04eb869c4b064be4904d5fd75d609819";
-    double clkLat = 0.0;
-    double clkLong = 0.0;
 
     // T Map View
     TMapView tMapView = null;
@@ -58,18 +64,11 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
     TMapGpsManager tMapGPS = null;
 
     //길찾기 메뉴로 추가된 코드
-    TMapPoint tMapPointStart = null;
     TMapPoint tMapPointEnd = null;
     String Distance = null;
     String Time = null;
 
     TMapPoint searchPoint = null;
-
-    TMapPOIItem POIItem = new TMapPOIItem();
-
-    ArrayList<String> arrPOI = new ArrayList<>();
-    int testNum = 1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,34 +76,25 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //db 파일 불러오기
+        try {
+            // 1번 isCheckDB 함수 : DB가 있는지 확인
+            boolean bResult = isCheckDB();	// DB가 있는지?
+            Log.d("MiniApp", "DB Check="+bResult);
+            if(!bResult){	// DB가 없으면 복사
+                // 2번 copyDB 함수 : DB를 local에서 device로 복사
+                copyDB(this);
+            }else{
 
-     /*   //DB test
-        //DB 생성
-        DBHelper helper;
-        SQLiteDatabase db;
-        helper = new DBHelper(MainActivity.this, "sampledb.db", null, 1);
-        db = helper.getWritableDatabase();
-        helper.onCreate(db);
-
-        //db 값 입력
-        ContentValues values = new ContentValues();
-        values.put("txt","test");
-        db.insert("mytable",null,values);*/
-
-
-        //길안내 버튼 테스트
-       // BusProvider.getInstance().register(this);   // Bus
-
+            }
+        } catch (Exception e) {
+        }
 
         // T Map View
         tMapView = new TMapView(this);
 
         // API Key
         tMapView.setSKTMapApiKey(API_Key);
-
-        //TMapMarkerItem markerItem1 = new TMapMarkerItem();
-
-        //TMapPoint tMapPoint1 = new TMapPoint(37.3004, 127.0358); // 경기대학교 수원캠퍼스
 
         //fragment를 이용한 메인 버튼 출력
         pro = (ImageButton) findViewById(R.id.pro);
@@ -148,14 +138,6 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
 
         // 마커 아이콘
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.iconfinder_icons_pin);
-
-        //markerItem1.setIcon(bitmap); // 마커 아이콘 지정
-        //markerItem1.setPosition(0.5f, 1.0f); // 마커의 중심점을 중앙, 하단으로 설정
-        //markerItem1.setTMapPoint( tMapPoint1 ); // 마커의 좌표 지정
-        //markerItem1.setName(""); // 마커의 타이틀 지정
-        //tMapView.addMarkerItem("markerItem1", markerItem1); // 지도에 마커 추가
-
-        //tMapView.setCenterPoint( 127.0358, 37.3004);
 
         // Initial Setting
         tMapView.setZoomLevel(17);
@@ -232,6 +214,9 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
     protected void onActivityResult(int requetCode, int resultCode, Intent data) {
         super.onActivityResult(requetCode, resultCode, data);
 
+        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.iconfinder_icons_pin);
+        TMapMarkerItem markerItem1 = new TMapMarkerItem();
+
         if(requetCode == REQUEST_CODE) {
             if(resultCode != Activity.RESULT_OK) {
                 return;
@@ -242,6 +227,12 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
             TMapPoint Now = new TMapPoint(tMapGPS.getLocation().getLatitude(), tMapGPS.getLocation().getLongitude());
             searchPoint = new TMapPoint(search_lati, search_longi);
             tMapView.setCenterPoint(search_longi, search_lati, true);
+
+            markerItem1.setIcon(bitmap); // 마커 아이콘 지정
+            markerItem1.setPosition(0.5f, 1.0f); // 마커의 중심점을 중앙, 하단으로 설정
+            markerItem1.setTMapPoint(searchPoint); // 마커의 좌표 지정
+            markerItem1.setName(""); // 마커의 타이틀 지정
+            tMapView.addMarkerItem("markerItem1", markerItem1); // 지도에 마커 추가
             drawPolyLine(Now, searchPoint);
         }
 
@@ -286,8 +277,8 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
                                 Time = time.item(0).getChildNodes().item(0).getNodeValue();
                                 int min = Integer.parseInt(Time)/60;
                                 int sec = Integer.parseInt(Time)%60;
-                                //TextView text = (TextView)findViewById(R.id.textTest);
-                                //text.setText("거리 : " + Distance + "m 시간 : " + min + "분 " + sec + "초");
+                                TextView text = (TextView)findViewById(R.id.min);
+                                text.setText("거리 : " + Distance + "m 시간 : " + min + "분 " + sec + "초");
                                 Log.d("debug", "거리 : " + Distance + "m\n시간 : " + min + "분 " + sec + "초");
                             }
                         }//end onFindPathDataAll
@@ -318,42 +309,6 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
         }
     }
 
-    private void setBalloonView(TMapMarkerItem marker, String title, String address) {
-        marker.setCanShowCallout(true);
-
-        if (marker.getCanShowCallout()) {
-            marker.setCalloutTitle(title);
-            marker.setCalloutSubTitle(address);
-
-            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.iconfinder_arrow_down);
-            marker.setCalloutRightButtonImage(bitmap);
-        }
-    }
-
-
-    private void searchPOI(ArrayList<String> arrPOI) {
-        final TMapData tMapData = new TMapData();
-        final ArrayList<TMapPoint> arrTMapPoint = new ArrayList<>();
-        final ArrayList<String> arrTitle = new ArrayList<>();
-        final ArrayList<String> arrAddr = new ArrayList<>();
-
-        for (int i = 0; i < arrPOI.size(); i++) {
-            tMapData.findTitlePOI(arrPOI.get(i), new TMapData.FindTitlePOIListenerCallback() {
-                @Override
-                public void onFindTitlePOI(ArrayList<TMapPOIItem> arrayList) {
-                    for (int j = 0; j < arrayList.size(); j++) {
-                        TMapPOIItem tMapPOIItem = arrayList.get(j);
-                        arrTMapPoint.add(tMapPOIItem.getPOIPoint());
-                        arrTitle.add(tMapPOIItem.getPOIName());
-                        arrAddr.add(tMapPOIItem.upperAddrName + " " +
-                                tMapPOIItem.middleAddrName + " " + tMapPOIItem.lowerAddrName);
-                        System.out.println(arrAddr);
-                    }
-                    setMultiMarkers(arrTMapPoint, arrTitle, arrAddr);
-                }
-            });
-        }
-    }
     private void setMultiMarkers(ArrayList<TMapPoint> arrTPoint)
     {
         for( int i = 0; i < arrTPoint.size(); i++ )
@@ -372,34 +327,7 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
         }
     }
 
-//강의동 좌표
-        void getPOIPoint(ArrayList<String> arrPOI, int bldNum) {
-        final TMapData tMapData = new TMapData();
-        final ArrayList<TMapPoint> arrTMapPoint = new ArrayList<>();
-        final ArrayList<String> arrTitle = new ArrayList<>();
-        final ArrayList<String> arrAddr = new ArrayList<>();
-        TMapPoint Now = new TMapPoint(tMapGPS.getLocation().getLatitude(), tMapGPS.getLocation().getLongitude());
 
-        //for (int i = 0; i < arrPOI.size(); i++) {
-        tMapData.findTitlePOI(arrPOI.get(bldNum), new TMapData.FindTitlePOIListenerCallback() {
-            @Override
-            public void onFindTitlePOI(ArrayList<TMapPOIItem> arrayList) {
-                TMapPOIItem tMapPOIItem = arrayList.get(0);
-                arrTMapPoint.add(tMapPOIItem.getPOIPoint());
-                arrTitle.add(tMapPOIItem.getPOIName());
-                arrAddr.add(tMapPOIItem.upperAddrName + " " +
-                        tMapPOIItem.middleAddrName + " " + tMapPOIItem.lowerAddrName);
-                System.out.println(arrAddr);
-                tMapPointEnd = tMapPOIItem.getPOIPoint();
-                tMapView.setCenterPoint(tMapPointEnd.getLongitude(), tMapPointEnd.getLatitude(), true);
-                setMultiMarkers(arrTMapPoint, arrTitle, arrAddr);
-                drawPolyLine(Now, tMapPointEnd);
-
-            }
-        });
-        //}
-
-        }
     //기타 좌표 수동입력
     void getPoint(ArrayList<TMapPoint> arrPoint, int bldNum){
         final ArrayList<TMapPoint> arrTMapPoint = new ArrayList<>();
@@ -431,31 +359,68 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
 
 
     }
+    public boolean isCheckDB(){
+        String filePath = "/data/data/org.techtown.tmaptes/databases/capdb.db";
+        File file = new File(filePath);
+        if (file.exists()) {
 
-    //강의동 설명에서 길찾기 버튼 눌렀을 때 이벤트
-    @Subscribe
-    public void LectureRoom(int num) {
-        ArrayList<String> arrPOI = new ArrayList<>();
-        arrPOI.add("경기대학교 수원캠퍼스 진리관");
-        arrPOI.add("경기대학교 수원캠퍼스 성신관");
-        arrPOI.add("경기대학교 수원캠퍼스 애경관");
-        arrPOI.add("경기대학교 수원캠퍼스 예지관");
-        arrPOI.add("경기대학교 수원캠퍼스 덕문관");
-        arrPOI.add("경기대학교 수원캠퍼스 광교관");
-        arrPOI.add("경기대학교 수원캠퍼스 집현관");
-        arrPOI.add("경기대학교 수원캠퍼스 육영관");
-        arrPOI.add("경기대학교 수원캠퍼스 종합강의동");
-        Log.e("TAG","bus");
-        getPOIPoint(arrPOI, num);
+            return true;
+        }
+
+        return false;
     }
 
+    // 2번 copyDB 함수 : DB를 local에서 device로 복사
+    // DB를 복사하기
+    // assets의 /db/xxxx.db 파일을 설치된 프로그램의 내부 DB공간으로 복사하기
+    public void copyDB(Context mContext){
+        Log.d("MiniApp", "copyDB");
+        AssetManager manager = mContext.getAssets();
+        String folderPath = "/data/data/org.techtown.tmaptest/databases";
+        String filePath = "/data/data/org.techtown.tmaptest/databases/capdb.db";
+        File folder = new File(folderPath);
+        File file = new File(filePath);
 
+        FileOutputStream fos = null;
+        BufferedOutputStream bos = null;
+        try {
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //BusProvider.getInstance().unregister(this);      // Bus
+            InputStream is = manager.open("capdb.db");
+            BufferedInputStream bis = new BufferedInputStream(is);
+
+            if (folder.exists()) {
+
+            }else{
+
+                folder.mkdirs();
+            }
+
+            if (file.exists()) {
+
+                file.delete();
+                file.createNewFile();
+            }
+
+            fos = new FileOutputStream(file);
+            bos = new BufferedOutputStream(fos);
+            int read = -1;
+            byte[] buffer = new byte[1024];
+            while ((read = bis.read(buffer, 0, 1024)) != -1) {
+                bos.write(buffer, 0, read);
+            }
+
+            bos.flush();
+
+            bos.close();
+            fos.close();
+            bis.close();
+            is.close();
+
+        } catch (IOException e) {
+
+            Log.e("ErrorMessage : ", e.getMessage());
+        }
     }
-
 
 }
+
