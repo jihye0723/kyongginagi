@@ -56,34 +56,6 @@ public class ProInfo2_7 extends Fragment implements onBackPressedListener {
             }
         }
 
-        /*adapter.addItem(new ProInfoItem("김영목", "031-249-9147", "ymkim710@hanmail.net"));
-        adapter.addItem(new ProInfoItem("정미경", "031-249-9150", "kassmede@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("강명희", "031-249-9148", "gunie88@hanmail.net"));
-        adapter.addItem(new ProInfoItem("이소영", "031-249-9146", "balkon@hanmail.net"));
-        adapter.addItem(new ProInfoItem("Herbermann Marcus Antonius", "031-249-1463", "herbermann@kyonggi.ac.kr"));
-
-        adapter.addItem(new ProInfoItem("유말희", "031-249-9158", "mhyoo@kgu.ac.kr"));
-        adapter.addItem(new ProInfoItem("김선미", "031-249-9157", "ksm66@kgu.ac.kr"));
-        adapter.addItem(new ProInfoItem("임재일", "031-249-9189", "limzeil1123@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("Arnaud Hilaire", "031-249-9262", "hilairearnaud74@hotmail.com"));
-
-        adapter.addItem(new ProInfoItem("박재환", "031-249-9117", "jhpark7@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("윤영수", "031-249-9119", "ysyoon@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("홍진희", "031-249-9121", "jhh@kgu.ac.kr"));
-        adapter.addItem(new ProInfoItem("김정희", "031-249-9310", "rusia73@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("곽은심", "031-249-9182", "kwak5017@kgu.ac.kr"));
-        adapter.addItem(new ProInfoItem("Mito Kuraishi", "031-249-9262", "reportkochiradesu-kura@kyonggi.ac.kr"));
-
-        adapter.addItem(new ProInfoItem("유영기", "031-249-9129", "easternmedicine@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("유현아", "031-249-9127", "xianya1@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("민경욱", "031-249-9264", "mkw318@kgu.ac.kr"));
-        adapter.addItem(new ProInfoItem("윤유정", "031-249-9194", "yunyujeong@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("이희현", "031-249-1371", "badanoul@kyonggi.ac.kr"));
-
-        adapter.addItem(new ProInfoItem("송현배", "031-249-9358", "hbsong@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("장혜진", "031-249-9297", "maya70@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("Kulyk Oleksandra", "031-249-9160", "jhantwins@gmail.com"));*/
-
         proInfo_content.setAdapter(adapter);
 
         return view;

@@ -70,6 +70,12 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
 
     TMapPoint searchPoint = null;
 
+    // 마커 아이콘
+    Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.iconfinder_icons_pin);
+
+    //거리와 시간표시를 위한 textview
+    TextView text = (TextView)findViewById(R.id.min);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -106,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
             @Override
             public void onClick(View v) {
                 tMapView.removeAllTMapPolyLine(); //다른 버튼 누르면 이전 길찾기 종료
+                text.setText("");
+
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 FragmentProfessor Fpro = new FragmentProfessor();
                 transaction.replace(R.id.tmap, Fpro);
@@ -117,6 +125,9 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
         navi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tMapView.removeAllTMapPolyLine(); //다른 버튼 누르면 이전 길찾기 종료
+                text.setText("");
+
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 FragmentLec Flec = new FragmentLec();
                 transaction.replace(R.id.tmap, Flec);
@@ -129,6 +140,8 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
             @Override
             public void onClick(View v) {
                 tMapView.removeAllTMapPolyLine(); //다른 버튼 누르면 이전 길찾기 종료
+                text.setText("");
+
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 FragmentTimetable Ftime = new FragmentTimetable();
                 transaction.replace(R.id.tmap, Ftime);
@@ -136,8 +149,8 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
             }
         });
 
-        // 마커 아이콘
-        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.iconfinder_icons_pin);
+
+
 
         // Initial Setting
         tMapView.setZoomLevel(17);
@@ -213,8 +226,6 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
     @Override
     protected void onActivityResult(int requetCode, int resultCode, Intent data) {
         super.onActivityResult(requetCode, resultCode, data);
-
-        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.iconfinder_icons_pin);
         TMapMarkerItem markerItem1 = new TMapMarkerItem();
 
         if(requetCode == REQUEST_CODE) {
@@ -228,11 +239,15 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
             searchPoint = new TMapPoint(search_lati, search_longi);
             tMapView.setCenterPoint(search_longi, search_lati, true);
 
+
+            //목적지 마커
             markerItem1.setIcon(bitmap); // 마커 아이콘 지정
             markerItem1.setPosition(0.5f, 1.0f); // 마커의 중심점을 중앙, 하단으로 설정
             markerItem1.setTMapPoint(searchPoint); // 마커의 좌표 지정
             markerItem1.setName(""); // 마커의 타이틀 지정
             tMapView.addMarkerItem("markerItem1", markerItem1); // 지도에 마커 추가
+
+            //길안내 라인
             drawPolyLine(Now, searchPoint);
         }
 
@@ -277,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
                                 Time = time.item(0).getChildNodes().item(0).getNodeValue();
                                 int min = Integer.parseInt(Time)/60;
                                 int sec = Integer.parseInt(Time)%60;
-                                TextView text = (TextView)findViewById(R.id.min);
+
                                 text.setText("거리 : " + Distance + "m 시간 : " + min + "분 " + sec + "초");
                                 Log.d("debug", "거리 : " + Distance + "m\n시간 : " + min + "분 " + sec + "초");
                             }

@@ -55,12 +55,7 @@ public class ProInfo4_5 extends Fragment implements onBackPressedListener {
                 adapter.addItem(new ProInfoItem(name, phone, email));
             }
         }
-        /*adapter.addItem(new ProInfoItem("민수홍", "031-249-9368", "suhong@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("황태정", "031-249-9337", "magnius@kgu.ac.kr"));
-        adapter.addItem(new ProInfoItem("장현석", "031-249-9344", "hsjang@kgu.ac.kr"));
-        adapter.addItem(new ProInfoItem("이민식", "031-249-9379", "lmspu@kgu.ac.kr"));
-        adapter.addItem(new ProInfoItem("황의갑", "031-249-9378", "hwanga@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("한영선", "031-249-1312", "hanys19@kyonggi.ac.kr"));*/
+
         proInfo_content.setAdapter(adapter);
 
         return view;

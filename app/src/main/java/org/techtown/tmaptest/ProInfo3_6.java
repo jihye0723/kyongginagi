@@ -54,8 +54,8 @@ public class ProInfo3_6 extends Fragment implements onBackPressedListener {
     @Override
     public void onBackPressed() {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        FragmentProfessor Fpro = new FragmentProfessor();
-        transaction.replace(R.id.tmap, Fpro);
+        ProInfo3 pro = new ProInfo3();
+        transaction.replace(R.id.tmap, pro);
         transaction.commit();
     }
 
