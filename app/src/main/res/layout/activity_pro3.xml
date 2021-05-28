@@ -53,6 +53,15 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pro03"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:background="@drawable/title_info"/>
 
                     <Button
                         android:id="@+id/pro03_01"

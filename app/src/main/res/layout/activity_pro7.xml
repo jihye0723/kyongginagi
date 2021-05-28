@@ -55,6 +55,15 @@
                     android:orientation="vertical">
 
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pro07"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:background="@drawable/title_info"/>
                     <Button
                         android:id="@+id/pro07_1"
                         style="@style/Widget.AppCompat.Button.Borderless"

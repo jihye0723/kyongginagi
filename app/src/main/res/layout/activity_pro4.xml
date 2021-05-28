@@ -27,16 +27,6 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="5dp"/>
 
-        <TextView
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:text="@string/pro04"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:background="@drawable/title_info"/>
-
         //강의동 리스트 레이아웃
 
         <GridLayout
@@ -50,6 +40,15 @@
             android:scrollbars="vertical"
 
             >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pro04"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/title_info"/>
 
             <Button
                 android:id="@+id/pro04_1"
