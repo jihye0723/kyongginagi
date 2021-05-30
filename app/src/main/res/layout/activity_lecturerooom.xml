@@ -24,7 +24,7 @@
             android:layout_gravity="bottom|center"
             android:background="#00ff0000"
             android:scaleType="fitCenter"
-            android:src="@drawable/b_lecture"
+            android:src="@drawable/b_navi"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"/>
 

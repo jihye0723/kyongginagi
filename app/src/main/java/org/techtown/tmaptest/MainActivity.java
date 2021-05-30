@@ -70,11 +70,6 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
 
     TMapPoint searchPoint = null;
 
-    // 마커 아이콘
-    Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.iconfinder_icons_pin);
-
-    //거리와 시간표시를 위한 textview
-    TextView text = (TextView)findViewById(R.id.min);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
         pro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView text = (TextView)findViewById(R.id.min);
                 tMapView.removeAllTMapPolyLine(); //다른 버튼 누르면 이전 길찾기 종료
                 text.setText("");
 
@@ -125,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
         navi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView text = (TextView)findViewById(R.id.min);
                 tMapView.removeAllTMapPolyLine(); //다른 버튼 누르면 이전 길찾기 종료
                 text.setText("");
 
@@ -140,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
             @Override
             public void onClick(View v) {
                 tMapView.removeAllTMapPolyLine(); //다른 버튼 누르면 이전 길찾기 종료
+                TextView text = (TextView)findViewById(R.id.min);
                 text.setText("");
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -201,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
             public void onLongPressEvent(ArrayList arrayList, ArrayList arrayList1, TMapPoint tMapPoint) {
                 Toast.makeText(getApplicationContext(), tMapPoint.getLatitude() + ", " + tMapPoint.getLongitude(), Toast.LENGTH_SHORT).show();
                 TMapMarkerItem markerItem1 = new TMapMarkerItem();
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.iconfinder_icons_pin);
 
                 TMapPoint tMapPoint1 = new TMapPoint(tMapPoint.getLatitude(), tMapPoint.getLongitude()); // 경기대학교 수원캠퍼스
 
@@ -227,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
     protected void onActivityResult(int requetCode, int resultCode, Intent data) {
         super.onActivityResult(requetCode, resultCode, data);
         TMapMarkerItem markerItem1 = new TMapMarkerItem();
+        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.iconfinder_icons_pin);
 
         if(requetCode == REQUEST_CODE) {
             if(resultCode != Activity.RESULT_OK) {
@@ -293,6 +293,7 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
                                 int min = Integer.parseInt(Time)/60;
                                 int sec = Integer.parseInt(Time)%60;
 
+                                TextView text = (TextView)findViewById(R.id.min);
                                 text.setText("거리 : " + Distance + "m 시간 : " + min + "분 " + sec + "초");
                                 Log.d("debug", "거리 : " + Distance + "m\n시간 : " + min + "분 " + sec + "초");
                             }

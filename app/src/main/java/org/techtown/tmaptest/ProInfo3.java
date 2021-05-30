@@ -112,14 +112,15 @@ public class ProInfo3 extends Fragment implements onBackPressedListener {
 
 
     public void onBackPressed() {
-        goToMain();
+        goToBack();
     }
 
-    //프래그먼트 종료
-    private void goToMain() {
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().remove(ProInfo3.this).commit();
-        fragmentManager.popBackStack();
+    //이전 프래그먼트로 돌아가기.
+    private void goToBack(){
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentProfessor pro= new FragmentProfessor();
+        transaction.replace(R.id.tmap,pro);
+        transaction.commit();
     }
 }
 
