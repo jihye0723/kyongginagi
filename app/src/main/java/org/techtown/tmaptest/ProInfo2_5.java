@@ -55,10 +55,6 @@ public class ProInfo2_5 extends Fragment implements onBackPressedListener {
                 adapter.addItem(new ProInfoItem(name, phone, email));
             }
         }
-
-        /*adapter.addItem(new ProInfoItem("신아영", "031-249-9107", "ahyoung@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("박영우", "031-249-9124", "rainbk@hanmail.net"));*/
-
         proInfo_content.setAdapter(adapter);
 
         return view;
@@ -69,13 +65,6 @@ public class ProInfo2_5 extends Fragment implements onBackPressedListener {
         ProInfo2 pro = new ProInfo2();
         transaction.replace(R.id.tmap, pro);
         transaction.commit();
-    }
-
-    //프래그먼트 종료
-    private void goToMain(){
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().remove(ProInfo2_5.this).commit();
-        fragmentManager.popBackStack();
     }
 
     //리스트뷰 어댑터 구현.

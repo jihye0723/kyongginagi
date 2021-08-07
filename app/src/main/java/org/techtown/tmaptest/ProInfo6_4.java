@@ -55,17 +55,6 @@ public class ProInfo6_4 extends Fragment implements onBackPressedListener {
                 adapter.addItem(new ProInfoItem(name, phone, email));
             }
         }
-        /*adapter.addItem(new ProInfoItem("이옥민", "031-249-9643", "omlee@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("길성호", "031-249-9646", "shghil@kgu.ac.kr"));
-        adapter.addItem(new ProInfoItem("공동수", "031-249-9649", "dskong@kgu.ac.kr"));
-        adapter.addItem(new ProInfoItem("이진성", "031-249-1306", "lejis@kgu.ac.kr"));
-        adapter.addItem(new ProInfoItem("동 계", "031-249-1325", "dongke@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("김진수", "031-249-9706", "herry1022@kgu.ac.kr"));
-        adapter.addItem(new ProInfoItem("윤병수", "031-249-9645", "bsyoon@kgu.ac.kr"));
-        adapter.addItem(new ProInfoItem("김재수", "031-249-9648", "jkimtamu@kyonggi.ac.kr"));
-        adapter.addItem(new ProInfoItem("이영수", "031-249-9644", "ysyi@kgu.ac.kr"));
-        adapter.addItem(new ProInfoItem("조경주", "031-249-1365", "kcho0611@kgu.ac.kr"));
-        adapter.addItem(new ProInfoItem("곽현정", "--", "hjkwak@kgu.ac.kr"));*/
 
         proInfo_content.setAdapter(adapter);
 
@@ -79,12 +68,6 @@ public class ProInfo6_4 extends Fragment implements onBackPressedListener {
         transaction.commit();
     }
 
-    //프래그먼트 종료
-    private void goToMain(){
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().remove(ProInfo6_4.this).commit();
-        fragmentManager.popBackStack();
-    }
 
     //리스트뷰 어댑터 구현.
     class ProInfoAdapter extends BaseAdapter {

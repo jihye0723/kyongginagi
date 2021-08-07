@@ -60,12 +60,6 @@ public class ProInfo7_10 extends Fragment implements onBackPressedListener {
         transaction.commit();
     }
 
-    //프래그먼트 종료
-    private void goToMain(){
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().remove(ProInfo7_10.this).commit();
-        fragmentManager.popBackStack();
-    }
     //리스트뷰 어댑터 구현
     class ProInfoAdapter extends BaseAdapter {
         ArrayList<ProInfoItem> items = new ArrayList<ProInfoItem>();
